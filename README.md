@@ -1,4 +1,6 @@
-# 🌱 howmuch.greene
+# 🌱 howmuch.green
+
+This repo contains the source code of https://howmuch.green
 
 ## Development
 
