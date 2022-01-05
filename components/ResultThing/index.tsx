@@ -35,7 +35,12 @@ export const ResultThing: FC<Props> = ({ result }) => (
           </S.SubCardItem>
         </S.SubCardRow>
       </S.Card>
-      Source: <a href="apple.com">apple.com</a>
+      Source:{" "}
+      {result.sources.map((s) => (
+        <span key={s}>
+          <a href={s}>{s}</a>
+        </span>
+      ))}
     </S.Body>
   </S.Container>
 );

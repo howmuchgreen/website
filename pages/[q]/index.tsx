@@ -20,6 +20,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
         co2eq: {
           kg: 83,
         },
+        sources: ["https://apple.com"],
       },
     },
   };
@@ -31,7 +32,7 @@ const ResultPage: NextPage<Props> = ({ result }) => {
   return (
     <div>
       <Head>
-        <title>howmuch.green</title>
+        <title>howmuch.green is {name}?</title>
         <meta name="description" content={`How much green is ${name}?`} />
       </Head>
       <ResultThing result={result} />

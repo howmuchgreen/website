@@ -2,16 +2,14 @@ import styled from "styled-components";
 
 // https://coolors.co/5c0029-f12711-f5af19-99b2dd-ffffff
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  margin: 0 auto;
+  max-width: 500px;
+`;
 
 export const Header = styled.div`
-  /* background: linear-gradient(to left, #f12711, #f5af19); */
-  padding-top: 32px;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-bottom: 64px;
-  /* color: white; */
   text-align: center;
+  margin-top: 16px;
 `;
 
 export const HeaderEmoji = styled.div`
@@ -26,12 +24,11 @@ export const HeaderTitle = styled.div`
 
 export const HeaderThing = styled.div<{ $textLenght: number }>`
   font-weight: bold;
-  font-size: calc(80vw / ${({ $textLenght }) => $textLenght});
+  font-size: min(4rem, calc(80vw / ${({ $textLenght }) => $textLenght}));
   margin-top: 16px;
 `;
 
 export const Body = styled.div`
-  margin-top: -64px;
   padding: 16px;
 `;
 

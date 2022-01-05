@@ -5,4 +5,5 @@ export interface HowMuch {
 export interface Thing {
   name: string;
   co2eq: HowMuch;
+  sources: string[];
 }
