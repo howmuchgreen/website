@@ -12,6 +12,7 @@ export const Title = styled.div`
   font-weight: bold;
   text-align: center;
   margin-bottom: 32px;
+  padding-right: 2ch; // to center the text and ignore the emoji
 
   @media (max-width: 768px) {
     font-size: 2rem;
@@ -38,12 +39,14 @@ export const ResultsContainer = styled.div`
   margin: 8px 16px;
 `;
 
-export const Result = styled.a`
+export const Result = styled.a<{ $selected: boolean }>`
   color: #999;
   transition: color 0.2s;
   font-size: 2rem;
   display: block;
   cursor: pointer;
+
+  ${({ $selected }) => ($selected ? "color: black;" : "")}
 
   :hover {
     color: black;

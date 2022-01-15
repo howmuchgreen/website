@@ -2,10 +2,7 @@ import styled from "styled-components";
 
 // https://coolors.co/5c0029-f12711-f5af19-99b2dd-ffffff
 
-export const Container = styled.div`
-  margin: 0 auto;
-  max-width: 500px;
-`;
+export const Container = styled.div``;
 
 export const Header = styled.div`
   text-align: center;
@@ -30,6 +27,8 @@ export const HeaderThing = styled.div<{ $textLenght: number }>`
 
 export const Body = styled.div`
   padding: 16px;
+  margin: 0 auto;
+  max-width: 500px;
 `;
 
 export const Card = styled.div`
