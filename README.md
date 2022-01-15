@@ -10,6 +10,7 @@ Node 16 is required.
 >```bash
 > arch -arm64 brew install pkg-config cairo pango libpng jpeg giflib librsvg
 >```
+> *This seems to be because of [`node-canvas` (thread here)](https://github.com/Automattic/node-canvas/issues/1733#issuecomment-808916786)*
 
 ```bash
 npm i
