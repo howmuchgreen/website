@@ -7,3 +7,5 @@ export interface Thing {
   co2eq: HowMuch;
   sources: string[];
 }
+
+export interface HowMuchResult extends Thing {}

@@ -1,5 +1,9 @@
 name: Deploy howmuch.green
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 jobs:
   vercel:
     runs-on: ubuntu-latest
