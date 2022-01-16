@@ -1,8 +1,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
+import { useHotkeys } from "react-hotkeys-hook";
 
 import { HowMuchResult } from "../../common/types";
 import * as S from "./styles";
@@ -14,13 +15,33 @@ const getResultUrl = (result: HowMuchResult) => {
 
 export const HomePage: NextPage = () => {
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<HowMuchResult[]>([]);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  useHotkeys(
+    "down",
+    (e) => {
+      e.preventDefault();
+      setSelectedIndex(Math.min(selectedIndex + 1, results.length - 1));
+    },
+    { enableOnTags: ["INPUT"] },
+    [results]
+  );
+  useHotkeys(
+    "up",
+    (e) => {
+      e.preventDefault();
+      setSelectedIndex(Math.max(selectedIndex - 1, 0));
+    },
+    {
+      enableOnTags: ["INPUT"],
+    }
+  );
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push(getResultUrl(results[0]));
+    router.push(getResultUrl(results[selectedIndex]));
   };
 
   useEffect(() => {
@@ -28,13 +49,19 @@ export const HomePage: NextPage = () => {
       fetch(`/api/${query}`)
         .then((res) => res.json())
         .then((res) => {
-          setSelectedIndex(null);
+          setSelectedIndex(0);
           setResults(res.results);
         });
     } else {
       setResults([]);
     }
   }, [query]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   return (
     <div>
@@ -44,11 +71,15 @@ export const HomePage: NextPage = () => {
       </Head>
       <S.Container>
         <S.Title>🌱 how green is:</S.Title>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} method="post" action="/api/query">
           <S.Input
             placeholder="iPho…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            ref={inputRef}
+            name="query"
+            spellCheck={false}
+            autoComplete="off"
           />
         </form>
         <S.ResultsContainer>
