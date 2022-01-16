@@ -4,11 +4,13 @@ import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { useHotkeys } from "react-hotkeys-hook";
+import * as Either from "fp-ts/Either";
+import { pipe } from "fp-ts/function";
 
-import { HowMuchResult } from "../../common/types";
 import * as S from "./styles";
+import { ResultObject, Thing } from "@howmuchgreen/howmuchcarbon";
 
-const getResultUrl = (result: HowMuchResult) => {
+const getResultUrl = (result: Thing) => {
   const { name } = result;
   return `/${name.replace(/ /g, "")}`;
 };
@@ -17,7 +19,7 @@ export const HomePage: NextPage = () => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<HowMuchResult[]>([]);
+  const [results, setResults] = useState<Thing[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   useHotkeys(
     "down",
@@ -41,6 +43,10 @@ export const HomePage: NextPage = () => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!results[selectedIndex]) {
+      return;
+    }
+
     router.push(getResultUrl(results[selectedIndex]));
   };
 
@@ -50,7 +56,12 @@ export const HomePage: NextPage = () => {
         .then((res) => res.json())
         .then((res) => {
           setSelectedIndex(0);
-          setResults(res.results);
+          pipe(
+            ResultObject.codec.decode(res),
+            Either.map(({ results }) => results),
+            Either.getOrElseW((e) => []),
+            setResults
+          );
         });
     } else {
       setResults([]);
@@ -85,7 +96,10 @@ export const HomePage: NextPage = () => {
         <S.ResultsContainer>
           {results.map((result, i) => (
             <Link href={getResultUrl(result)} key={i} passHref>
-              <S.Result $selected={i === selectedIndex}>{result.name}</S.Result>
+              <S.Result $selected={i === selectedIndex}>
+                <span>{result.name}</span>
+                <span>{result.co2Eq.format()}</span>
+              </S.Result>
             </Link>
           ))}
         </S.ResultsContainer>

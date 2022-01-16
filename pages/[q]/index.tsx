@@ -5,8 +5,14 @@ import { ResultThing } from "../../components/ResultThing";
 import { howMuch, HowMuchResult } from "@howmuchgreen/howmuchcarbon";
 import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
+import {
+  getCarbon2050Percentage,
+  getCarbonTodayPercentage,
+} from "../../common/carbon";
+
 interface Props {
   result: any;
+  query: string;
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (
@@ -31,11 +37,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   return {
     props: {
       result: encodedResult,
+      query,
     },
   };
 };
 
-const ResultPage: NextPage<Props> = ({ result }) => {
+const ResultPage: NextPage<Props> = ({ result, query }) => {
   const decodedResult = pipe(
     result,
     HowMuchResult.codec.decode,
@@ -46,13 +53,27 @@ const ResultPage: NextPage<Props> = ({ result }) => {
     return null;
   }
 
-  const { name } = decodedResult;
+  const { name, co2Eq } = decodedResult;
+
+  const percentageCarbonToday = getCarbonTodayPercentage(co2Eq);
+  const percentageCarbon2050 = getCarbon2050Percentage(co2Eq);
+
+  const ogUrl = `https://howmuch.green/${query}`;
+  const ogDescription = `${name} emits about ${decodedResult.co2Eq.format()} CO2eq. That’s ${percentageCarbonToday}% of today average human emission, and ${percentageCarbon2050}% of the 2050 target.`;
+  const ogImage = `https://howmuch.green/api/${query}/img`;
 
   return (
     <div>
       <Head>
         <title>howmuch.green is {name}?</title>
-        <meta name="description" content={`How green is ${name}?`} />
+        <meta property="description" content={ogDescription} />
+        <meta name="twitter:site" content="@howmuchgreen" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={ogImage} />
+        <meta property="og:url" content={ogUrl} />
+        <meta property="og:title" content={`How green is ${name}?`} />
+        <meta property="og:description" content={ogDescription} />
+        <meta name="og:image" content={ogImage} />
       </Head>
       <ResultThing result={decodedResult} />
     </div>

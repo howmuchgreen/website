@@ -48,6 +48,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700&display=swap"
             rel="stylesheet"
           />
+          <link rel="shortcut icon" type="image/png" href="/favicon.png" />
         </Head>
         <body>
           <Main />
