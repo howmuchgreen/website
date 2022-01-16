@@ -56,12 +56,12 @@ export const HomePage: NextPage = () => {
         .then((res) => res.json())
         .then((res) => {
           setSelectedIndex(0);
-          const newResults = pipe(
-            res,
-            ResultObject.codec.decode,
-            Either.getOrElseW((e) => null)
+          pipe(
+            ResultObject.codec.decode(res),
+            Either.map(({ results }) => results),
+            Either.getOrElseW((e) => []),
+            setResults
           );
-          setResults(newResults?.results ?? []);
         });
     } else {
       setResults([]);
