@@ -60,6 +60,7 @@ const ResultPage: NextPage<Props> = ({ result, query }) => {
 
   const ogUrl = `https://howmuch.green/${query}`;
   const ogDescription = `${name} emits about ${decodedResult.co2Eq.format()} CO2eq. That’s ${percentageCarbonToday}% of today average human emission, and ${percentageCarbon2050}% of the 2050 target.`;
+  const ogImage = `https://howmuch.green/api/${query}/img`;
 
   return (
     <div>
@@ -67,9 +68,12 @@ const ResultPage: NextPage<Props> = ({ result, query }) => {
         <title>howmuch.green is {name}?</title>
         <meta property="description" content={ogDescription} />
         <meta name="twitter:site" content="@howmuchgreen" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={ogImage} />
         <meta property="og:url" content={ogUrl} />
         <meta property="og:title" content={`How green is ${name}?`} />
         <meta property="og:description" content={ogDescription} />
+        <meta name="og:image" content={ogImage} />
       </Head>
       <ResultThing result={decodedResult} />
     </div>
