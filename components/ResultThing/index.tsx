@@ -1,4 +1,5 @@
 import { Co2EqUnit, Thing } from "@howmuchgreen/howmuchcarbon";
+import Link from "next/link";
 import { FC } from "react";
 import * as S from "./styles";
 
@@ -50,14 +51,21 @@ export const ResultThing: FC<Props> = ({ result }) => {
             </S.SubCardItem>
           </S.SubCardRow>
         </S.Card>
-        Source:{" "}
-        {result.sources.map((s) => (
-          <span key={s}>
-            <a href={s} target="_blank" rel="noreferrer">
-              {new URL(s).host.replace("www.", "")}
-            </a>
-          </span>
-        ))}
+        <div>
+          Source:{" "}
+          {result.sources.map((s) => (
+            <span key={s}>
+              <a href={s} target="_blank" rel="noreferrer">
+                {new URL(s).host.replace("www.", "")}
+              </a>
+            </span>
+          ))}
+        </div>
+        <S.NewSearchContainer>
+          <Link href="/" passHref>
+            <S.NewSearch>New search</S.NewSearch>
+          </Link>
+        </S.NewSearchContainer>
       </S.Body>
     </S.Container>
   );
