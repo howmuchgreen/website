@@ -53,7 +53,9 @@ export const ResultThing: FC<Props> = ({ result }) => {
         Source:{" "}
         {result.sources.map((s) => (
           <span key={s}>
-            <a href={s}>{new URL(s).host.replace("www.", "")}</a>
+            <a href={s} target="_blank" rel="noreferrer">
+              {new URL(s).host.replace("www.", "")}
+            </a>
           </span>
         ))}
       </S.Body>

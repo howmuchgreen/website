@@ -78,6 +78,8 @@ export const HomePage: NextPage = () => {
             onChange={(e) => setQuery(e.target.value)}
             ref={inputRef}
             name="query"
+            spellCheck={false}
+            autoComplete="off"
           />
         </form>
         <S.ResultsContainer>
