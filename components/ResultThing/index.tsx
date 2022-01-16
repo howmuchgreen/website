@@ -3,16 +3,15 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import {
+  getCarbon2050Percentage,
+  getCarbonTodayPercentage,
+} from "../../common/carbon";
 import * as S from "./styles";
 
 interface Props {
   result: Thing;
 }
-
-// Sources: https://www.carbonbrief.org/analysis-why-children-must-emit-eight-times-less-co2-than-their-grandparents
-// Sources: https://www.lemonde.fr/planete/article/2019/04/11/combien-de-co2-pourrez-vous-emettre-dans-votre-vie-si-le-rechauffement-est-contenu-a-1-5-degre_5448606_3244.html
-const CARBON_YEARLY_TODAY_GRAMS = 4_800_000;
-const CARBON_YEARLY_2050_GRAMS = 1_900_000;
 
 export const ResultThing: FC<Props> = ({ result }) => {
   const router = useRouter();
@@ -22,12 +21,8 @@ export const ResultThing: FC<Props> = ({ result }) => {
 
   const [co2eq, unit] = result.co2Eq.format().split(" ");
 
-  const percentageCarbonToday = Math.ceil(
-    (result.co2Eq.averageInGrams * 100) / CARBON_YEARLY_TODAY_GRAMS
-  );
-  const percentageCarbon2050 = Math.ceil(
-    (result.co2Eq.averageInGrams * 100) / CARBON_YEARLY_2050_GRAMS
-  );
+  const percentageCarbonToday = getCarbonTodayPercentage(result.co2Eq);
+  const percentageCarbon2050 = getCarbon2050Percentage(result.co2Eq);
 
   return (
     <S.Container>
