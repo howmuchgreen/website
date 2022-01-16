@@ -5,6 +5,7 @@ import { ResultThing } from "../../components/ResultThing";
 import { howMuch, HowMuchResult } from "@howmuchgreen/howmuchcarbon";
 import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
+
 interface Props {
   result: any;
 }

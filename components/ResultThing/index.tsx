@@ -1,4 +1,4 @@
-import { Co2EqUnit, Thing } from "@howmuchgreen/howmuchcarbon";
+import { Thing } from "@howmuchgreen/howmuchcarbon";
 import Link from "next/link";
 import { FC } from "react";
 import * as S from "./styles";

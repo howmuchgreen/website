@@ -43,8 +43,10 @@ export const Result = styled.a<{ $selected: boolean }>`
   color: #999;
   transition: color 0.2s;
   font-size: 2rem;
-  display: block;
+  display: flex;
   cursor: pointer;
+  flex-direction: row;
+  justify-content: space-between;
 
   ${({ $selected }) => ($selected ? "color: black;" : "")}
 
