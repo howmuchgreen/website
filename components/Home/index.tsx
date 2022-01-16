@@ -43,6 +43,10 @@ export const HomePage: NextPage = () => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!results[selectedIndex]) {
+      return;
+    }
+
     router.push(getResultUrl(results[selectedIndex]));
   };
 

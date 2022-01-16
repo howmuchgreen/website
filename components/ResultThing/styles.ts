@@ -123,3 +123,9 @@ export const NewSearch = styled.a`
     background-color: white;
   }
 `;
+
+export const NewSearchKeyboard = styled.div`
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-top: 4px;
+`;

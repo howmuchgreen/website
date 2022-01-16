@@ -1,6 +1,8 @@
 import { Thing } from "@howmuchgreen/howmuchcarbon";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FC } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import * as S from "./styles";
 
 interface Props {
@@ -13,6 +15,11 @@ const CARBON_YEARLY_TODAY_GRAMS = 4_800_000;
 const CARBON_YEARLY_2050_GRAMS = 1_900_000;
 
 export const ResultThing: FC<Props> = ({ result }) => {
+  const router = useRouter();
+  useHotkeys("enter", () => {
+    router.push("/");
+  });
+
   const [co2eq, unit] = result.co2Eq.format().split(" ");
 
   const percentageCarbonToday = Math.ceil(
@@ -65,6 +72,7 @@ export const ResultThing: FC<Props> = ({ result }) => {
           <Link href="/" passHref>
             <S.NewSearch>New search</S.NewSearch>
           </Link>
+          <S.NewSearchKeyboard>or press Enter</S.NewSearchKeyboard>
         </S.NewSearchContainer>
       </S.Body>
     </S.Container>
