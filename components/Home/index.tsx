@@ -71,12 +71,13 @@ export const HomePage: NextPage = () => {
       </Head>
       <S.Container>
         <S.Title>🌱 how green is:</S.Title>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} method="post" action="/api/query">
           <S.Input
             placeholder="iPho…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             ref={inputRef}
+            name="query"
           />
         </form>
         <S.ResultsContainer>
