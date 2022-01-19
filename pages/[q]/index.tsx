@@ -67,13 +67,13 @@ const ResultPage: NextPage<Props> = ({ result, query }) => {
       <Head>
         <title>howmuch.green is {name}?</title>
         <meta property="description" content={ogDescription} />
-        <meta name="twitter:site" content="@howmuchgreen" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={ogImage} />
         <meta property="og:url" content={ogUrl} />
         <meta property="og:title" content={`How green is ${name}?`} />
         <meta property="og:description" content={ogDescription} />
-        <meta name="og:image" content={ogImage} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="twitter:site" content="@howmuchgreen" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:image" content={ogImage} />
       </Head>
       <ResultThing result={decodedResult} />
     </div>
