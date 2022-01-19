@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@howmuchgreen/howmuchcarbon": "^0.2.1",
+    "@napi-rs/canvas": "^0.1.19",
     "@types/styled-components": "^5.1.19",
-    "canvas": "^2.8.0",
     "fathom-client": "^3.2.0",
     "next": "12.0.7",
     "react": "17.0.2",
