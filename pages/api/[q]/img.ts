@@ -1,32 +1,25 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import {
-  createCanvas,
-  NodeCanvasRenderingContext2D,
-  registerFont,
-  loadImage,
-} from "canvas";
+import { GlobalFonts, Canvas, Image, SKRSContext2D } from "@napi-rs/canvas";
 import { howMuch, Thing } from "@howmuchgreen/howmuchcarbon";
+import { readFileSync } from "fs";
 
-registerFont("./common/fonts/Nunito-Regular.ttf", { family: "Nunito" });
-registerFont("./common/fonts/Nunito-ExtraLight.ttf", {
-  family: "Nunito",
-  weight: "200",
-});
-registerFont("./common/fonts/Nunito-Bold.ttf", {
-  family: "Nunito",
-  weight: "700",
-});
+GlobalFonts.registerFromPath("./common/fonts/Nunito-Regular.ttf");
+GlobalFonts.registerFromPath("./common/fonts/Nunito-ExtraLight.ttf");
+GlobalFonts.registerFromPath("./common/fonts/Nunito-Bold.ttf");
 
 const IMG_WIDTH = 1200;
 const IMG_HEIGHT = 630;
 
-const addBackground = async (context: NodeCanvasRenderingContext2D) => {
-  const image = await loadImage("./public/socialBackground.png");
+const addBackground = async (context: SKRSContext2D) => {
+  const image = new Image();
+  image.src = readFileSync("./public/socialBackground.png");
+  image.width = IMG_WIDTH;
+  image.height = IMG_HEIGHT;
 
   context.drawImage(image, 0, 0, IMG_WIDTH, IMG_HEIGHT);
 };
 
-const addWebsite = (context: NodeCanvasRenderingContext2D, q: string) => {
+const addWebsite = (context: SKRSContext2D, q: string) => {
   const website = `howmuch.green/`;
   const y = 560;
   const x = 130;
@@ -42,7 +35,7 @@ const addWebsite = (context: NodeCanvasRenderingContext2D, q: string) => {
   context.fillText(query, x + 360, y);
 };
 
-const addResult = (context: NodeCanvasRenderingContext2D, result: Thing) => {
+const addResult = (context: SKRSContext2D, result: Thing) => {
   const [co2eq, unit] = result.co2Eq.format().split(" ");
 
   context.font = "normal 42pt Nunito";
@@ -68,7 +61,7 @@ export default async function handler(
 
   const result = howMuch(query).bestResult;
 
-  const canvas = createCanvas(IMG_WIDTH, IMG_HEIGHT);
+  const canvas = new Canvas(IMG_WIDTH, IMG_HEIGHT);
   const context = canvas.getContext("2d");
 
   await addBackground(context);
