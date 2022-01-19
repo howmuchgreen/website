@@ -2,17 +2,22 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { GlobalFonts, Canvas, Image, SKRSContext2D } from "@napi-rs/canvas";
 import { howMuch, Thing } from "@howmuchgreen/howmuchcarbon";
 import { readFileSync } from "fs";
+import { join, resolve } from "path";
 
-GlobalFonts.registerFromPath("./common/fonts/Nunito-Regular.ttf");
-GlobalFonts.registerFromPath("./common/fonts/Nunito-ExtraLight.ttf");
-GlobalFonts.registerFromPath("./common/fonts/Nunito-Bold.ttf");
+GlobalFonts.registerFromPath(
+  resolve("./public", "fonts", "Nunito-Regular.ttf")
+);
+GlobalFonts.registerFromPath(
+  resolve("./public", "fonts", "Nunito-ExtraLight.ttf")
+);
+GlobalFonts.registerFromPath(resolve("./public", "fonts", "Nunito-Bold.ttf"));
 
 const IMG_WIDTH = 1200;
 const IMG_HEIGHT = 630;
 
 const addBackground = async (context: SKRSContext2D) => {
   const image = new Image();
-  image.src = readFileSync("./public/socialBackground.png");
+  image.src = readFileSync(resolve("./public", "socialBackground.png"));
   image.width = IMG_WIDTH;
   image.height = IMG_HEIGHT;
 
