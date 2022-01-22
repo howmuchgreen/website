@@ -1,0 +1,15 @@
+name: Deploy howmuch.green
+on:
+  repository_dispatch:
+    types:
+      - upgrade-library
+jobs:
+  upgrade-library:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.HOWMUCHBOT_GH_TOKEN }}
+      - name: Upgrade howmuchcarbon library
+        run: npm add @howmuchgreen/howmuchcarbon@latest
+      - uses: stefanzweifel/git-auto-commit-action@v4
