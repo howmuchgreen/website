@@ -12,7 +12,8 @@ jobs:
           token: ${{ secrets.HOWMUCHBOT_GH_TOKEN }}
       - name: Upgrade howmuchcarbon library
         run: npm add @howmuchgreen/howmuchcarbon@latest
-      - run: echo "LIB_VERSION=$(npm list @howmuchgreen/howmuchcarbon | grep -o '\d\.\d\.\d')" >> $GITHUB_ENV
+      - name: Extract version number
+        run: echo "::set-env name=LIB_VERSION::$(npm list @howmuchgreen/howmuchcarbon | grep -o '\d\.\d\.\d')"
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "feat: upgrading howmuchcarbon to v${{ env.LIB_VERSION }}"
