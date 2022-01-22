@@ -14,8 +14,9 @@ jobs:
         run: npm add @howmuchgreen/howmuchcarbon@latest
       - name: Extract version number
         run: |
-          echo "LIB_VERSION=$(npm list @howmuchgreen/howmuchcarbon | grep -o '\d\.\d\.\d')"
-          echo "LIB_VERSION=$(npm list @howmuchgreen/howmuchcarbon | grep -o '\d\.\d\.\d')" >> $GITHUB_ENV
+          npm list @howmuchgreen/howmuchcarbon
+          echo "LIB_VERSION=$(npm list @howmuchgreen/howmuchcarbon | grep -Pzo '\d\.\d\.\d')"
+          echo "LIB_VERSION=$(npm list @howmuchgreen/howmuchcarbon | grep -Pzo '\d\.\d\.\d')" >> $GITHUB_ENV
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "feat: upgrading howmuchcarbon to v${{ env.LIB_VERSION }}"
