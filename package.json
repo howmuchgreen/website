@@ -8,7 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@howmuchgreen/howmuchcarbon": "^0.6.0",
+    "@howmuchgreen/howmuchcarbon": "^0.7.0",
     "@napi-rs/canvas": "^0.1.19",
     "@types/styled-components": "^5.1.19",
     "fathom-client": "^3.2.0",
