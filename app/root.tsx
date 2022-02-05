@@ -29,6 +29,13 @@ export default function App() {
           rel="stylesheet"
         />
         <link rel="shortcut icon" type="image/png" href="/favicon.png" />
+        <script
+          src="https://cdn.usefathom.com/script.js"
+          data-site="PZXJJRVS"
+          data-included-domains="howmuch.green,www.howmuch.green"
+          data-spa="auto"
+          defer
+        ></script>
         <Meta />
         <Links />
         {typeof document === "undefined" ? "__STYLES__" : null}
