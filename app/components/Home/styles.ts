@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "remix";
 
 export const Container = styled.div`
   max-width: 800px;
@@ -39,7 +40,7 @@ export const ResultsContainer = styled.div`
   margin: 8px 16px;
 `;
 
-export const Result = styled.a<{ $selected: boolean }>`
+export const Result = styled(Link)<{ $selected: boolean }>`
   color: #999;
   transition: color 0.2s;
   font-size: 2rem;

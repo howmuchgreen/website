@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "remix";
 
 // https://coolors.co/5c0029-f12711-f5af19-99b2dd-ffffff
 
@@ -107,7 +108,7 @@ export const NewSearchContainer = styled.div`
   margin-top: 64px;
 `;
 
-export const NewSearch = styled.a`
+export const NewSearch = styled(Link)`
   font-weight: bold;
   border: 2px solid black;
   padding: 4px 8px;

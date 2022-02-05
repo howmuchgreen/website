@@ -1,8 +1,7 @@
 import { Thing } from "@howmuchgreen/howmuchcarbon";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { FC } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useNavigate } from "remix";
 import {
   getCarbon2050Percentage,
   getCarbonTodayPercentage,
@@ -14,9 +13,9 @@ interface Props {
 }
 
 export const ResultThing: FC<Props> = ({ result }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   useHotkeys("enter", () => {
-    router.push("/");
+    navigate("/");
   });
 
   const [co2eq, unit] = result.co2Eq.format().split(" ");
@@ -64,9 +63,7 @@ export const ResultThing: FC<Props> = ({ result }) => {
           ))}
         </div>
         <S.NewSearchContainer>
-          <Link href="/" passHref>
-            <S.NewSearch>New search</S.NewSearch>
-          </Link>
+          <S.NewSearch to="/">New search</S.NewSearch>
           <S.NewSearchKeyboard>or press Enter</S.NewSearchKeyboard>
         </S.NewSearchContainer>
       </S.Body>

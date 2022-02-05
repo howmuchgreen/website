@@ -1,8 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import { GlobalFonts, Canvas, Image, SKRSContext2D } from "@napi-rs/canvas";
-import { howMuch, Thing } from "@howmuchgreen/howmuchcarbon";
+import { howMuch, ResultObject, Thing } from "@howmuchgreen/howmuchcarbon";
 import { readFileSync } from "fs";
-import { join, resolve } from "path";
+import { resolve } from "path";
+import { LoaderFunction } from "remix";
 
 GlobalFonts.registerFromPath(
   resolve("./public", "fonts", "Nunito-Regular.ttf")
@@ -57,13 +57,7 @@ const addResult = (context: SKRSContext2D, result: Thing) => {
   context.fillText(`${unit} CO2eq`, 840, 360);
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const { q } = req.query;
-  const query = `${q}`;
-
+export const generateSocialImage = async (query: string) => {
   const result = howMuch(query).bestResult;
 
   const canvas = new Canvas(IMG_WIDTH, IMG_HEIGHT);
@@ -75,5 +69,5 @@ export default async function handler(
 
   const buffer = canvas.toBuffer("image/png");
 
-  res.status(200).setHeader("Content-Type", "image/png").send(buffer);
-}
+  return buffer;
+};

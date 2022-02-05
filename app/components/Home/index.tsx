@@ -1,22 +1,19 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
 import { useHotkeys } from "react-hotkeys-hook";
 import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
+import { ResultObject, Thing } from "@howmuchgreen/howmuchcarbon";
+import { useNavigate } from "remix";
 
 import * as S from "./styles";
-import { ResultObject, Thing } from "@howmuchgreen/howmuchcarbon";
 
 const getResultUrl = (result: Thing) => {
   const { name } = result;
   return `/${name.replace(/ /g, "")}`;
 };
 
-export const HomePage: NextPage = () => {
-  const router = useRouter();
+export const HomePage = () => {
+  const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Thing[]>([]);
@@ -47,7 +44,7 @@ export const HomePage: NextPage = () => {
       return;
     }
 
-    router.push(getResultUrl(results[selectedIndex]));
+    navigate(getResultUrl(results[selectedIndex]));
   };
 
   useEffect(() => {
@@ -76,10 +73,6 @@ export const HomePage: NextPage = () => {
 
   return (
     <div>
-      <Head>
-        <title>howmuch.green</title>
-        <meta name="description" content="How much green?" />
-      </Head>
       <S.Container>
         <S.Title>🌱 how green is:</S.Title>
         <form onSubmit={onSubmit} method="post" action="/api/query">
@@ -95,12 +88,14 @@ export const HomePage: NextPage = () => {
         </form>
         <S.ResultsContainer>
           {results.map((result, i) => (
-            <Link href={getResultUrl(result)} key={i} passHref>
-              <S.Result $selected={i === selectedIndex}>
-                <span>{result.name}</span>
-                <span>{result.co2Eq.format()}</span>
-              </S.Result>
-            </Link>
+            <S.Result
+              to={getResultUrl(result)}
+              key={i}
+              $selected={i === selectedIndex}
+            >
+              <span>{result.name}</span>
+              <span>{result.co2Eq.format()}</span>
+            </S.Result>
           ))}
         </S.ResultsContainer>
       </S.Container>
