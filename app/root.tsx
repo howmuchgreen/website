@@ -6,6 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "remix";
+import { About } from "./components/About";
 import styles from "./styles/global.css";
 
 export function links() {
@@ -42,6 +43,7 @@ export default function App() {
       </head>
       <body>
         <Outlet />
+        <About />
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}
