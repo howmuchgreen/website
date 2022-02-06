@@ -1,23 +1,54 @@
 import { GlobalFonts, Canvas, Image, SKRSContext2D } from "@napi-rs/canvas";
-import { howMuch, ResultObject, Thing } from "@howmuchgreen/howmuchcarbon";
-import { readFileSync } from "fs";
-import { resolve } from "path";
-import { LoaderFunction } from "remix";
+import { howMuch, Thing } from "@howmuchgreen/howmuchcarbon";
+import { readFileSync, readdirSync, statSync } from "fs";
+import { join } from "path";
 
-GlobalFonts.registerFromPath(
-  resolve("./public", "fonts", "Nunito-Regular.ttf")
-);
-GlobalFonts.registerFromPath(
-  resolve("./public", "fonts", "Nunito-ExtraLight.ttf")
-);
-GlobalFonts.registerFromPath(resolve("./public", "fonts", "Nunito-Bold.ttf"));
+const getAssetPath = (asset: string) => {
+  return join(__dirname, "..", "..", "..", "public", asset);
+};
+
+GlobalFonts.registerFromPath(getAssetPath("fonts/Nunito-Regular.ttf"));
+GlobalFonts.registerFromPath(getAssetPath("fonts/Nunito-ExtraLight.ttf"));
+GlobalFonts.registerFromPath(getAssetPath("fonts/Nunito-Bold.ttf"));
 
 const IMG_WIDTH = 1200;
 const IMG_HEIGHT = 630;
 
+const getAllFiles = function (dirPath: string, arrayOfFiles: string[]) {
+  console.log(dirPath);
+  const files = readdirSync(dirPath);
+
+  arrayOfFiles = arrayOfFiles || [];
+
+  if (files.length > 20) {
+    return arrayOfFiles;
+  }
+
+  files.forEach(function (file) {
+    if (statSync(dirPath + "/" + file).isDirectory()) {
+      arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles);
+    } else {
+      arrayOfFiles.push(join(dirPath, "/", file));
+    }
+  });
+
+  return arrayOfFiles;
+};
+
+// [
+//   '/var/task/output/server/pages/api/___vc/__bridge.js',
+//   '/var/task/output/server/pages/api/___vc/__helpers.js',
+//   '/var/task/output/server/pages/api/___vc/__launcher.js',
+//   '/var/task/output/server/pages/api/___vc/package.json',
+//   '/var/task/output/server/pages/api/_build/assets.json',
+//   '/var/task/output/server/pages/api/_build/index.js',
+//   '/var/task/output/server/pages/api/index.js',
+//   '/var/task/output/server/pages/package.json'
+// ]
 const addBackground = async (context: SKRSContext2D) => {
+  console.log(getAllFiles(join(__dirname, "..", "..", "..", ".."), []));
   const image = new Image();
-  image.src = readFileSync(resolve("./public", "socialBackground.png"));
+  image.src = readFileSync(getAssetPath("socialBackground.png"));
   image.width = IMG_WIDTH;
   image.height = IMG_HEIGHT;
 
