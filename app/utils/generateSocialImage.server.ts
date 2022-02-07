@@ -1,10 +1,10 @@
 import { GlobalFonts, Canvas, Image, SKRSContext2D } from "@napi-rs/canvas";
 import { howMuch, Thing } from "@howmuchgreen/howmuchcarbon";
-import { readFileSync, readdirSync, statSync } from "fs";
+import { readFileSync } from "fs";
 import { join } from "path";
 
 const getAssetPath = (asset: string) => {
-  return join(__dirname, "..", "..", "..", "public", asset);
+  return join("./public", asset);
 };
 
 GlobalFonts.registerFromPath(getAssetPath("fonts/Nunito-Regular.ttf"));
@@ -14,39 +14,7 @@ GlobalFonts.registerFromPath(getAssetPath("fonts/Nunito-Bold.ttf"));
 const IMG_WIDTH = 1200;
 const IMG_HEIGHT = 630;
 
-const getAllFiles = function (dirPath: string, arrayOfFiles: string[]) {
-  console.log(dirPath);
-  const files = readdirSync(dirPath);
-
-  arrayOfFiles = arrayOfFiles || [];
-
-  if (files.length > 20) {
-    return arrayOfFiles;
-  }
-
-  files.forEach(function (file) {
-    if (statSync(dirPath + "/" + file).isDirectory()) {
-      arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles);
-    } else {
-      arrayOfFiles.push(join(dirPath, "/", file));
-    }
-  });
-
-  return arrayOfFiles;
-};
-
-// [
-//   '/var/task/output/server/pages/api/___vc/__bridge.js',
-//   '/var/task/output/server/pages/api/___vc/__helpers.js',
-//   '/var/task/output/server/pages/api/___vc/__launcher.js',
-//   '/var/task/output/server/pages/api/___vc/package.json',
-//   '/var/task/output/server/pages/api/_build/assets.json',
-//   '/var/task/output/server/pages/api/_build/index.js',
-//   '/var/task/output/server/pages/api/index.js',
-//   '/var/task/output/server/pages/package.json'
-// ]
 const addBackground = async (context: SKRSContext2D) => {
-  console.log(getAllFiles(join(__dirname, "..", "..", "..", ".."), []));
   const image = new Image();
   image.src = readFileSync(getAssetPath("socialBackground.png"));
   image.width = IMG_WIDTH;
