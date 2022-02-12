@@ -11,7 +11,7 @@
     "start": "remix-serve build"
   },
   "dependencies": {
-    "@howmuchgreen/howmuchcarbon": "^0.8.0",
+    "@howmuchgreen/howmuchcarbon": "^0.8.1",
     "@napi-rs/canvas": "^0.1.19",
     "@remix-run/react": "^1.1.3",
     "@remix-run/serve": "^1.1.3",
