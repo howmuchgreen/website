@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "remix";
 
 // https://coolors.co/5c0029-f12711-f5af19-99b2dd-ffffff
 
@@ -99,34 +98,4 @@ export const SubCardNumber = styled.div`
 export const SubCardLegend = styled.div`
   color: #ff99c7;
   font-size: 0.7rem;
-`;
-
-export const NewSearchContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 64px;
-`;
-
-export const NewSearch = styled(Link)`
-  font-weight: bold;
-  border: 2px solid black;
-  padding: 4px 8px;
-  border-radius: 8px;
-  color: black;
-  display: block;
-  cursor: pointer;
-
-  transition: background-color 0.2s;
-
-  :hover {
-    text-decoration: none;
-    background-color: white;
-  }
-`;
-
-export const NewSearchKeyboard = styled.div`
-  font-size: 0.8rem;
-  opacity: 0.8;
-  margin-top: 4px;
 `;
