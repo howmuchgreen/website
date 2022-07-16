@@ -1,4 +1,4 @@
-import { Thing, Trip } from "@howmuchgreen/howmuchcarbon";
+import { Thing, Trip } from "@howmuchgreen/howmuchcarbon/domain";
 
 type Result = Thing | Trip;
 

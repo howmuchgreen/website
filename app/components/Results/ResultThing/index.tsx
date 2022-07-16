@@ -1,4 +1,4 @@
-import { Thing } from "@howmuchgreen/howmuchcarbon";
+import { Thing } from "@howmuchgreen/howmuchcarbon/domain";
 import { FC } from "react";
 import { CO2eq } from "~/components/CO2eq";
 import {

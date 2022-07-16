@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
-import { ResultObject, Thing, Trip } from "@howmuchgreen/howmuchcarbon";
+import { ResultObject, Thing, Trip } from "@howmuchgreen/howmuchcarbon/domain";
 import { useNavigate } from "remix";
 
 import * as S from "./styles";

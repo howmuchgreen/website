@@ -1,6 +1,7 @@
 import { MetaFunction, redirect, useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
-import { howMuch, HowMuchResult } from "@howmuchgreen/howmuchcarbon";
+import { howMuch } from "@howmuchgreen/howmuchcarbon";
+import { HowMuchResult } from "@howmuchgreen/howmuchcarbon/domain";
 import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
 import { ResultThing } from "~/components/Results/ResultThing";
