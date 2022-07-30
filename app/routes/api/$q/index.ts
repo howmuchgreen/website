@@ -1,5 +1,5 @@
 import { howMuch } from "@howmuchgreen/howmuchcarbon";
-import { ResultObject } from "@howmuchgreen/howmuchcarbon/domain";
+import { ResultObject } from "@howmuchgreen/howmuchcarbon";
 import { LoaderFunction } from "remix";
 
 export const loader: LoaderFunction = async ({ params }) => {
