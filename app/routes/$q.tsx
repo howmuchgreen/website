@@ -3,11 +3,13 @@ import type { LoaderFunction } from "remix";
 import { howMuch, HowMuchResult } from "@howmuchgreen/howmuchcarbon";
 import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
-import { ResultThing } from "~/components/ResultThing";
+import { ResultThing } from "~/components/Results/ResultThing";
 import {
   getCarbon2050Percentage,
   getCarbonTodayPercentage,
 } from "~/common/carbon";
+import { ResultTrip } from "~/components/Results/ResultTrip";
+import { getResultCo2Eq, getResultName } from "~/common/result";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { q } = params;
@@ -40,13 +42,14 @@ export const meta: MetaFunction = ({ data }) => {
     throw new Error("Should not happen");
   }
 
-  const { name, co2Eq } = decodedResult;
+  const co2Eq = getResultCo2Eq(decodedResult);
+  const name = getResultName(decodedResult);
 
   const percentageCarbonToday = getCarbonTodayPercentage(co2Eq);
   const percentageCarbon2050 = getCarbon2050Percentage(co2Eq);
 
   const ogUrl = `https://howmuch.green/${query}`;
-  const ogDescription = `${name} emits about ${decodedResult.co2Eq.format()} CO2eq. That’s ${percentageCarbonToday}% of today average human emission, and ${percentageCarbon2050}% of the 2050 target.`;
+  const ogDescription = `${name} emits about ${co2Eq.format()} CO2eq. That’s ${percentageCarbonToday}% of today average human emission, and ${percentageCarbon2050}% of the 2050 target.`;
   const ogImage = `https://howmuch.green/api/${query}/img`;
 
   return {
@@ -75,5 +78,11 @@ export default function Posts() {
     return null;
   }
 
-  return <ResultThing result={decodedResult} />;
+  if (decodedResult.kind === "thing") {
+    return <ResultThing result={decodedResult} />;
+  } else if (decodedResult.kind === "trip") {
+    return <ResultTrip result={decodedResult} />;
+  }
+
+  return null;
 }

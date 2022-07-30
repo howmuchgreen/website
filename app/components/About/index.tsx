@@ -1,9 +1,8 @@
-import React from "react";
 import * as S from "./styles";
 
 export const About = () => (
   <S.Container>
-    <a href="https://github.com/howmuchgreen/website" target="_blank">
+    <a href="https://github.com/howmuchgreen" target="_blank">
       GitHub
     </a>{" "}
     /{" "}

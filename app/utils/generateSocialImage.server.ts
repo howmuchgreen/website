@@ -1,7 +1,10 @@
 import { GlobalFonts, Canvas, Image, SKRSContext2D } from "@napi-rs/canvas";
-import { howMuch, Thing } from "@howmuchgreen/howmuchcarbon";
+import { howMuch, Trip, Thing } from "@howmuchgreen/howmuchcarbon";
 import { readFileSync } from "fs";
 import { join } from "path";
+import { getResultCo2Eq, getResultName } from "~/common/result";
+
+type Result = Trip | Thing;
 
 const getAssetPath = (asset: string) => {
   return join("./public", asset);
@@ -39,17 +42,19 @@ const addWebsite = (context: SKRSContext2D, q: string) => {
   context.fillText(query, x + 360, y);
 };
 
-const addResult = (context: SKRSContext2D, result: Thing) => {
-  const [co2eq, unit] = result.co2Eq.format().split(" ");
+const addResult = (context: SKRSContext2D, result: Result) => {
+  const name = getResultName(result);
+  const co2Eq = getResultCo2Eq(result);
+  const [co2, unit] = co2Eq.format().split(" ");
 
   context.font = "normal 42pt Nunito";
   context.textAlign = "center";
   context.fillStyle = "#000";
-  context.fillText(result.name, IMG_WIDTH / 2, 100);
+  context.fillText(name, IMG_WIDTH / 2, 100);
 
   context.font = "700 160pt Nunito";
   context.fillStyle = "#f12711";
-  context.fillText(co2eq, IMG_WIDTH / 2, 360);
+  context.fillText(co2, IMG_WIDTH / 2, 360);
 
   context.font = "normal 50pt Nunito";
   context.textAlign = "left";

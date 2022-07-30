@@ -1,11 +1,11 @@
-import { Thing } from "@howmuchgreen/howmuchcarbon";
+import { Thing } from "@howmuchgreen/howmuchcarbon/domain";
 import { FC } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
-import { useNavigate } from "remix";
+import { CO2eq } from "~/components/CO2eq";
 import {
   getCarbon2050Percentage,
   getCarbonTodayPercentage,
-} from "../../common/carbon";
+} from "../../../common/carbon";
+import { NewSearch } from "../components/NewSearch";
 import * as S from "./styles";
 
 interface Props {
@@ -13,11 +13,6 @@ interface Props {
 }
 
 export const ResultThing: FC<Props> = ({ result }) => {
-  const navigate = useNavigate();
-  useHotkeys("enter", () => {
-    navigate("/");
-  });
-
   const [co2eq, unit] = result.co2Eq.format().split(" ");
 
   const percentageCarbonToday = getCarbonTodayPercentage(result.co2Eq);
@@ -34,7 +29,9 @@ export const ResultThing: FC<Props> = ({ result }) => {
       </S.Header>
       <S.Body>
         <S.Card>
-          <S.CardTitle>CO2eq emitted</S.CardTitle>
+          <S.CardTitle>
+            <CO2eq /> emitted
+          </S.CardTitle>
           <S.CardNumberContainer>
             <S.CardNumberEmpty />
             <S.CardNumber>{co2eq}</S.CardNumber>
@@ -62,10 +59,7 @@ export const ResultThing: FC<Props> = ({ result }) => {
             </span>
           ))}
         </div>
-        <S.NewSearchContainer>
-          <S.NewSearch to="/">New search</S.NewSearch>
-          <S.NewSearchKeyboard>or press Enter</S.NewSearchKeyboard>
-        </S.NewSearchContainer>
+        <NewSearch />
       </S.Body>
     </S.Container>
   );
