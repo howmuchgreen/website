@@ -1,12 +1,17 @@
-import { howMuch } from "@howmuchgreen/howmuchcarbon";
-import { ResultObject } from "@howmuchgreen/howmuchcarbon";
+import {
+  CITIES_ABOVE_10_000,
+  HowMuch,
+  ResultObject,
+} from "@howmuchgreen/howmuchcarbon";
 import { LoaderFunction } from "remix";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { q } = params;
   const query = `${q}`;
 
-  const results = howMuch(query);
+  const results = new HowMuch({
+    cities: CITIES_ABOVE_10_000,
+  }).search(query);
 
   const encodedResults = ResultObject.codec.encode(results);
   return encodedResults;

@@ -1,4 +1,4 @@
-import { Trip } from "@howmuchgreen/howmuchcarbon/domain";
+import { Trip } from "@howmuchgreen/howmuchcarbon";
 import { FC } from "react";
 import {
   getCarbon2050Percentage,

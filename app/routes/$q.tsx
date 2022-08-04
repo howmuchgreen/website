@@ -1,6 +1,10 @@
 import { MetaFunction, redirect, useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
-import { howMuch, HowMuchResult } from "@howmuchgreen/howmuchcarbon";
+import {
+  HowMuch,
+  HowMuchResult,
+  CITIES_ABOVE_10_000,
+} from "@howmuchgreen/howmuchcarbon";
 import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
 import { ResultThing } from "~/components/Results/ResultThing";
@@ -15,7 +19,9 @@ export const loader: LoaderFunction = async ({ params }) => {
   const { q } = params;
   const query = `${q}`;
 
-  const result = howMuch(query).bestResult;
+  const result = new HowMuch({ cities: CITIES_ABOVE_10_000 }).search(
+    query
+  ).bestResult;
 
   if (!result) {
     return redirect("/");
