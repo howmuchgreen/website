@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link as RemixLink } from "remix";
+import { Link as RemixLink } from "@remix-run/react";
 
 export const Container = styled.div`
   display: flex;

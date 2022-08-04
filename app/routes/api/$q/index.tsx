@@ -3,7 +3,7 @@ import {
   HowMuch,
   ResultObject,
 } from "@howmuchgreen/howmuchcarbon";
-import { LoaderFunction } from "remix";
+import { LoaderFunction } from "@remix-run/node";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { q } = params;

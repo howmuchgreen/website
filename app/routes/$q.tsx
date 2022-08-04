@@ -1,5 +1,5 @@
-import { MetaFunction, redirect, useLoaderData } from "remix";
-import type { LoaderFunction } from "remix";
+import { MetaFunction, redirect } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
 import {
   HowMuch,
   HowMuchResult,
@@ -14,6 +14,7 @@ import {
 } from "~/common/carbon";
 import { ResultTrip } from "~/components/Results/ResultTrip";
 import { getResultCo2Eq, getResultName } from "~/common/result";
+import { useLoaderData } from "@remix-run/react";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { q } = params;
