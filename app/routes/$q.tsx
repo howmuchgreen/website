@@ -4,6 +4,7 @@ import {
   HowMuch,
   HowMuchResult,
   CITIES_ABOVE_10_000,
+  ALL_THINGS,
 } from "@howmuchgreen/howmuchcarbon";
 import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
@@ -20,9 +21,10 @@ export const loader: LoaderFunction = async ({ params }) => {
   const { q } = params;
   const query = `${q}`;
 
-  const result = new HowMuch({ cities: CITIES_ABOVE_10_000 }).search(
-    query
-  ).bestResult;
+  const result = new HowMuch({
+    cities: CITIES_ABOVE_10_000,
+    things: ALL_THINGS,
+  }).search(query).bestResult;
 
   if (!result) {
     return redirect("/");
