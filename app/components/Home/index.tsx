@@ -3,7 +3,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
 import { ResultObject, Thing, Trip } from "@howmuchgreen/howmuchcarbon";
-import { useNavigate } from "remix";
+import { useNavigate } from "@remix-run/react";
 
 import * as S from "./styles";
 import { getResultCo2Eq, getResultName, getResultPath } from "~/common/result";

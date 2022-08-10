@@ -1,5 +1,5 @@
 import { useHotkeys } from "react-hotkeys-hook";
-import { useNavigate } from "remix";
+import { useNavigate } from "@remix-run/react";
 import * as S from "./styles";
 
 export const NewSearch = () => {

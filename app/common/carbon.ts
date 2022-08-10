@@ -1,6 +1,6 @@
 // Sources: https://www.carbonbrief.org/analysis-why-children-must-emit-eight-times-less-co2-than-their-grandparents
 
-import { Co2Eq } from "@howmuchgreen/howmuchcarbon/domain";
+import { Co2Eq } from "@howmuchgreen/howmuchcarbon";
 
 // Sources: https://www.lemonde.fr/planete/article/2019/04/11/combien-de-co2-pourrez-vous-emettre-dans-votre-vie-si-le-rechauffement-est-contenu-a-1-5-degre_5448606_3244.html
 const CARBON_YEARLY_TODAY_GRAMS = 4_800_000;

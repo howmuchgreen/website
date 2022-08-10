@@ -1,6 +1,11 @@
-import { MetaFunction, redirect, useLoaderData } from "remix";
-import type { LoaderFunction } from "remix";
-import { howMuch, HowMuchResult } from "@howmuchgreen/howmuchcarbon";
+import { MetaFunction, redirect } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
+import {
+  HowMuch,
+  HowMuchResult,
+  CITIES_ABOVE_10_000,
+  ALL_THINGS,
+} from "@howmuchgreen/howmuchcarbon";
 import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
 import { ResultThing } from "~/components/Results/ResultThing";
@@ -10,12 +15,16 @@ import {
 } from "~/common/carbon";
 import { ResultTrip } from "~/components/Results/ResultTrip";
 import { getResultCo2Eq, getResultName } from "~/common/result";
+import { useLoaderData } from "@remix-run/react";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { q } = params;
   const query = `${q}`;
 
-  const result = howMuch(query).bestResult;
+  const result = new HowMuch({
+    cities: CITIES_ABOVE_10_000,
+    things: ALL_THINGS,
+  }).search(query).bestResult;
 
   if (!result) {
     return redirect("/");
