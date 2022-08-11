@@ -1,5 +1,5 @@
 import { HomePage } from "~/components/Home";
-import { MetaFunction } from "remix";
+import { MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return {

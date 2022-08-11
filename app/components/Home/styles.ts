@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "remix";
+import { Link } from "@remix-run/react";
 
 export const Container = styled.div`
   max-width: 800px;
