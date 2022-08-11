@@ -5,7 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "remix";
+} from "@remix-run/react";
 import { About } from "./components/About";
 import styles from "./styles/global.css";
 

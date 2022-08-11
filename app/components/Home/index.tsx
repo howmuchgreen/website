@@ -2,21 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
-import { ResultObject, Thing } from "@howmuchgreen/howmuchcarbon";
-import { useNavigate } from "remix";
+import { ResultObject, Thing, Trip } from "@howmuchgreen/howmuchcarbon";
+import { useNavigate } from "@remix-run/react";
 
 import * as S from "./styles";
+import { getResultCo2Eq, getResultName, getResultPath } from "~/common/result";
 
-const getResultUrl = (result: Thing) => {
-  const { name } = result;
-  return `/${name.replace(/ /g, "")}`;
-};
+type Result = Thing | Trip;
 
 export const HomePage = () => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<Thing[]>([]);
+  const [results, setResults] = useState<Result[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   useHotkeys(
     "down",
@@ -44,7 +42,7 @@ export const HomePage = () => {
       return;
     }
 
-    navigate(getResultUrl(results[selectedIndex]));
+    navigate(getResultPath(results[selectedIndex]));
   };
 
   useEffect(() => {
@@ -89,12 +87,12 @@ export const HomePage = () => {
         <S.ResultsContainer>
           {results.map((result, i) => (
             <S.Result
-              to={getResultUrl(result)}
+              to={getResultPath(result)}
               key={i}
               $selected={i === selectedIndex}
             >
-              <span>{result.name}</span>
-              <span>{result.co2Eq.format()}</span>
+              <span>{getResultName(result)}</span>
+              <span>{getResultCo2Eq(result).format()}</span>
             </S.Result>
           ))}
         </S.ResultsContainer>

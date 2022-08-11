@@ -1,43 +1,47 @@
-import { Thing } from "@howmuchgreen/howmuchcarbon";
+import { Trip } from "@howmuchgreen/howmuchcarbon";
 import { FC } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
-import { useNavigate } from "remix";
 import {
   getCarbon2050Percentage,
   getCarbonTodayPercentage,
-} from "../../common/carbon";
+} from "../../../common/carbon";
 import * as S from "./styles";
+import { flag } from "country-emoji";
+import { NewSearch } from "../components/NewSearch";
+import { CO2eq } from "~/components/CO2eq";
 
 interface Props {
-  result: Thing;
+  result: Trip;
 }
 
-export const ResultThing: FC<Props> = ({ result }) => {
-  const navigate = useNavigate();
-  useHotkeys("enter", () => {
-    navigate("/");
-  });
+export const ResultTrip: FC<Props> = ({ result }) => {
+  const [transportFlight] = result.transports;
+  const co2Eq = transportFlight.co2Eq;
+  const [co2, unit] = co2Eq.format().split(" ");
 
-  const [co2eq, unit] = result.co2Eq.format().split(" ");
+  const percentageCarbonToday = getCarbonTodayPercentage(co2Eq);
+  const percentageCarbon2050 = getCarbon2050Percentage(co2Eq);
 
-  const percentageCarbonToday = getCarbonTodayPercentage(result.co2Eq);
-  const percentageCarbon2050 = getCarbon2050Percentage(result.co2Eq);
+  const name = `${flag(result.origin.country)} ${result.origin.name} ✈ ${
+    result.destination.name
+  } ${flag(result.destination.country)}`;
 
   return (
     <S.Container>
       <S.Header>
         <S.HeaderEmoji>🌱</S.HeaderEmoji>
         <S.HeaderTitle>how green is:</S.HeaderTitle>
-        <S.HeaderThing $textLenght={Math.ceil(4 + 0.4 * result.name.length)}>
-          {result.name}
+        <S.HeaderThing $textLenght={Math.ceil(4 + 0.4 * name.length)}>
+          {name}
         </S.HeaderThing>
       </S.Header>
       <S.Body>
         <S.Card>
-          <S.CardTitle>CO2eq emitted</S.CardTitle>
+          <S.CardTitle>
+            <CO2eq /> emitted
+          </S.CardTitle>
           <S.CardNumberContainer>
             <S.CardNumberEmpty />
-            <S.CardNumber>{co2eq}</S.CardNumber>
+            <S.CardNumber>{co2}</S.CardNumber>
             <S.CardNumberUnit>{unit}</S.CardNumberUnit>
           </S.CardNumberContainer>
           <S.CardLine />
@@ -53,8 +57,14 @@ export const ResultThing: FC<Props> = ({ result }) => {
           </S.SubCardRow>
         </S.Card>
         <div>
-          Source:{" "}
-          {result.sources.map((s) => (
+          Explanation:{" "}
+          {new Intl.NumberFormat(undefined, {
+            maximumFractionDigits: 0,
+          }).format(result.distanceInKm)}{" "}
+          km × {transportFlight.explanation.co2EqPerKm.format()}/km
+          <br />
+          Cf.{" "}
+          {transportFlight.explanation.sources.map((s) => (
             <span key={s}>
               <a href={s} target="_blank" rel="noreferrer">
                 {new URL(s).host.replace("www.", "")}
@@ -62,10 +72,7 @@ export const ResultThing: FC<Props> = ({ result }) => {
             </span>
           ))}
         </div>
-        <S.NewSearchContainer>
-          <S.NewSearch to="/">New search</S.NewSearch>
-          <S.NewSearchKeyboard>or press Enter</S.NewSearchKeyboard>
-        </S.NewSearchContainer>
+        <NewSearch />
       </S.Body>
     </S.Container>
   );
