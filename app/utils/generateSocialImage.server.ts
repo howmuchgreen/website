@@ -43,15 +43,35 @@ const addWebsite = (context: SKRSContext2D, q: string) => {
 };
 
 const addResult = (context: SKRSContext2D, result: Result) => {
-  const name = getResultName(result);
+  context.font = "normal 42pt Nunito";
+  context.fillStyle = "#000";
+
+  if (result.kind === "thing") {
+    const name = getResultName(result);
+
+    context.textAlign = "center";
+    context.fillText(name, IMG_WIDTH / 2, 100);
+  } else if (result.kind === "trip") {
+    const originName = result.origin.name;
+    const destinationName = result.destination.name;
+
+    context.textAlign = "right";
+    context.fillText(originName, IMG_WIDTH / 2 - 64, 100);
+
+    context.textAlign = "left";
+    context.fillText(destinationName, IMG_WIDTH / 2 + 64, 100);
+
+    const image = new Image();
+    image.src = readFileSync(getAssetPath("plane.png"));
+    image.width = 64;
+    image.height = 32;
+    context.drawImage(image, IMG_WIDTH / 2 - 32, 100 - 32, 64, 32);
+  }
+
   const co2Eq = getResultCo2Eq(result);
   const [co2, unit] = co2Eq.format().split(" ");
 
-  context.font = "normal 42pt Nunito";
   context.textAlign = "center";
-  context.fillStyle = "#000";
-  context.fillText(name, IMG_WIDTH / 2, 100);
-
   context.font = "700 160pt Nunito";
   context.fillStyle = "#f12711";
   context.fillText(co2, IMG_WIDTH / 2, 360);
